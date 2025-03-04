@@ -2,7 +2,7 @@
 
 ### **Introducing Secret Manager CLI – A Secure, Local, and Lightweight Password Management Solution**  
 
-In today's digital landscape, password security is a major concern. Many users either rely on third-party password managers, which raise trust issues, store passwords in plaintext files, making them vulnerable, or use simple passwords just to remember them—each posing significant security risks. Secret Manager CLI is here to change that. 
+In today's digital landscape, password security is a major concern. Many users either rely on third-party password managers, which raise trust issues, store passwords in plaintext files, making them vulnerable, or use simple passwords just to remember them—each posing significant security risks. Secret Manager CLI is here to change that.
 
 ## 🚀 What is Secret Manager CLI?  
 Secret Manager CLI is a lightweight, **AI-generated** command-line tool that allows you to securely store and manage sensitive information **locally**, using encryption. No cloud, no third-party services—**just you and your encrypted secrets**.  
@@ -31,7 +31,7 @@ and handling your secrets securely.
 ---
 
 ## Installation
-Follow these steps to set up Secret Manager on your system.
+Follow these steps to set up Secret Manager on macOS, Linux, and Windows.
 
 ### 1. Set Up a Virtual Environment
 ```sh
@@ -56,27 +56,63 @@ For **bash users**:
 ```sh
 nano ~/.bashrc
 ```
+For **Linux users**:
+```sh
+nano ~/.bash_profile
+```
+For **Windows users** (PowerShell):
+```powershell
+[System.Environment]::SetEnvironmentVariable("SECRETS_FILE", "$env:USERPROFILE\secrets.enc", [System.EnvironmentVariableTarget]::User)
+```
 Add the following line:
 ```sh
-export SECRETS_FILE=~/Desktop/secrets.enc
+export SECRETS_FILE=~/Desktop/secrets.enc  # macOS/Linux
+setx SECRETS_FILE "%USERPROFILE%\secrets.enc"  # Windows (CMD)
 ```
 Save and exit, then apply the changes:
 ```sh
 source ~/.zshrc   # For zsh users
 source ~/.bashrc  # For bash users
+source ~/.bash_profile  # For Linux users
 ```
 
 ### 4. Download and Install Secret Manager CLI
+#### macOS/Linux
 ```sh
-download secret_manager.py  # Replace with the actual download command
-
+wget https://your-download-link.com/secret_manager.py -O secret_manager.py  # Replace with actual link
 sudo mv secret_manager.py /usr/local/bin/secret_manager
 sudo chmod +x /usr/local/bin/secret_manager
 ```
 
+#### Windows
+```powershell
+Invoke-WebRequest -Uri "https://your-download-link.com/secret_manager.py" -OutFile "$env:USERPROFILE\secret_manager.py"
+```
+Then, add the Python script directory to your system PATH:
+```powershell
+[System.Environment]::SetEnvironmentVariable("Path", "$env:Path;$env:USERPROFILE", [System.EnvironmentVariableTarget]::User)
+```
+Now, you can run it using:
+```sh
+python %USERPROFILE%\secret_manager.py  # CMD
+python $env:USERPROFILE\secret_manager.py  # PowerShell
+```
+To make it a command, create a batch file:
+1. Open Notepad and paste:
+   ```sh
+   @echo off
+   python %USERPROFILE%\secret_manager.py %*
+   ```
+2. Save it as `secret_manager.bat` in `C:\Windows`.
+3. Now, run it from any terminal:
+   ```sh
+   secret_manager
+   ```
+
 ### 5. Run Secret Manager
 ```sh
-secret_manager
+secret_manager  # macOS/Linux
+secret_manager.bat  # Windows
 ```
 
 ---
@@ -85,7 +121,7 @@ secret_manager
 
 ### Secret Manager (`secret_manager`)
 Perform secure operations with encrypted secrets:
-- **Add key-value pairs** – Store secrets securely, it can also generate strong password on your behalf.
+- **Add key-value pairs** – Store secrets securely; it can also generate strong passwords on your behalf.
 - **Retrieve values** – Copy secret values directly to the clipboard without displaying them.
 - **Change encryption key** – Update the encryption key if needed.
 - **Search keys** – Find stored secrets using prefix-based search.
@@ -109,3 +145,4 @@ Perform secure operations with encrypted secrets:
 
 ## Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests to enhance this tool.
+
